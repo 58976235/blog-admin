@@ -38,8 +38,8 @@
                 </a-form-item>
               </a-col>
             </template>
-            <a-col :md="8" :sm="24">
-              <span class="table-page-search-submitButtons" :style="{ float: 'left', overflow: 'hidden' } ">
+            <a-col :md="!advanced && 8 || 8" :sm="24">
+              <span class="table-page-search-submitButtons" :style="advanced && { float: 'right', overflow: 'hidden' } || {} ">
                 <a-button type="primary" @click="$refs.table.refresh(true)">查询</a-button>
                 <a-button style="margin-left: 8px" @click="() => this.queryParam = {}">重置</a-button>
                 <a @click="toggleAdvanced" style="margin-left: 8px">
@@ -118,32 +118,32 @@ import CreateForm from './modules/CreateForm'
 
 const columns = [
   {
-    title: '文章索引',
+    title: '#',
     scopedSlots: { customRender: 'serial' }
   },
   {
-    title: '文章标题',
+    title: '规则编号',
     dataIndex: 'no'
   },
   {
-    title: '文章内容',
+    title: '描述',
     dataIndex: 'description',
     scopedSlots: { customRender: 'description' }
   },
   {
-    title: '发布时间',
+    title: '服务调用次数',
     dataIndex: 'callNo',
     sorter: true,
     needTotal: true,
     customRender: (text) => text + ' 次'
   },
   {
-    title: '文章状态',
+    title: '状态',
     dataIndex: 'status',
     scopedSlots: { customRender: 'status' }
   },
   {
-    title: '作者',
+    title: '更新时间',
     dataIndex: 'updatedAt',
     sorter: true
   },

@@ -15,6 +15,7 @@ export default {
     'menu.blogManager.commentManager': '评论管理',
     'menu.blogManager.collectionManager': '收藏管理',
     'menu.blogManager.linkManager': '友链管理',
+    'menu.blogManager.resourceManagement': '资源管理',
     'menu.account': '个人页',
     'menu.account.center': '个人中心',
     'menu.account.settings': '个人设置',

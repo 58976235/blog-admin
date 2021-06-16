@@ -55,6 +55,12 @@ export const asyncRouterMap = [
             name: 'LinkManager',
             component: () => import('@/views/blogManager/linkManager'),
             meta: { title: 'menu.blogManager.linkManager', keepAlive: true, permission: ['table'] }
+          },
+          {
+            path: '/blogManager/ResourceManagement',
+            name: 'ResourceManagement',
+            component: () => import('@/views/blogManager/ResourceManagement'),
+            meta: { title: 'menu.blogManager.resourceManagement', keepAlive: true, permission: ['table'] }
           }
         ]
       },

@@ -15,6 +15,7 @@ export default {
     'menu.blogManager.commentManager': 'CommentManager',
     'menu.blogManager.collectionManager': 'CollectionManager',
     'menu.blogManager.linkManager': 'LinkManager',
+    'menu.blogManager.resourceManagement': 'ResourceManagement',
     'menu.account': 'account',
     'menu.account.center': 'center',
     'menu.account.settings': 'settings',

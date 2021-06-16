@@ -1,7 +1,7 @@
 <template>
   <a-modal
-    title="新建规则"
-    :width="640"
+    title="新建文章"
+    :width="840"
     :visible="visible"
     :confirmLoading="loading"
     @ok="() => { $emit('ok') }"
@@ -16,6 +16,10 @@
         <a-form-item label="描述">
           <a-input v-decorator="['description', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
         </a-form-item>
+        <wang-editor @change="editorChange"/>
+        <a-form-item label="描述">
+          <a-input v-decorator="['description', {rules: [{required: true, min: 5, message: '请输入至少五个字符的规则描述！'}]}]" />
+        </a-form-item>
       </a-form>
     </a-spin>
   </a-modal>
@@ -23,7 +27,7 @@
 
 <script>
 import pick from 'lodash.pick'
-
+import wangEditor from '@/components/Editor/WangEditor.vue'
 // 表单字段
 const fields = ['description', 'id']
 
@@ -67,6 +71,14 @@ export default {
     this.$watch('model', () => {
       this.model && this.form.setFieldsValue(pick(this.model, fields))
     })
+  },
+  methods: {
+    editorChange (value) {
+      console.log(value)
+    }
+  },
+  components: {
+    wangEditor
   }
 }
 </script>

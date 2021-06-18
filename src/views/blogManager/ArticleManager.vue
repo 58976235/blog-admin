@@ -69,23 +69,16 @@
       <s-table
         ref="table"
         size="default"
-        rowKey="key"
+        :rowKey="(record) => record.articleId"
         :columns="columns"
         :data="loadData"
         :alert="true"
         :rowSelection="rowSelection"
         showPagination="auto"
       >
-        <span slot="serial" slot-scope="text, record, index">
-          {{ index + 1 }}
+        <span slot="time" slot-scope="time">
+          {{ time | times }}
         </span>
-        <span slot="status" slot-scope="text">
-          <a-badge :status="text | statusTypeFilter" :text="text | statusFilter" />
-        </span>
-        <span slot="description" slot-scope="text">
-          <ellipsis :length="4" tooltip>{{ text }}</ellipsis>
-        </span>
-
         <span slot="action" slot-scope="text, record">
           <template>
             <a @click="handleEdit(record)">配置</a>
@@ -111,7 +104,7 @@
 <script>
 import moment from 'moment'
 import { STable, Ellipsis } from '@/components'
-import { getRoleList, getServiceList } from '@/api/manage'
+import { getRoleList, getArticleList } from '@/api/manage'
 
 import StepByStepModal from './modules/StepByStepModal'
 import CreateForm from './modules/CreateForm'
@@ -119,33 +112,26 @@ import CreateForm from './modules/CreateForm'
 const columns = [
   {
     title: '文章索引',
-    scopedSlots: { customRender: 'serial' }
+    dataIndex: 'articleId'
   },
   {
     title: '文章标题',
-    dataIndex: 'no'
+    dataIndex: 'title'
   },
   {
     title: '文章内容',
-    dataIndex: 'description',
-    scopedSlots: { customRender: 'description' }
+    dataIndex: 'content'
   },
   {
     title: '发布时间',
-    dataIndex: 'callNo',
+    dataIndex: 'time',
     sorter: true,
     needTotal: true,
-    customRender: (text) => text + ' 次'
+    scopedSlots: { customRender: 'time' }
   },
   {
     title: '文章状态',
-    dataIndex: 'status',
-    scopedSlots: { customRender: 'status' }
-  },
-  {
-    title: '作者',
-    dataIndex: 'updatedAt',
-    sorter: true
+    dataIndex: 'type'
   },
   {
     title: '操作',
@@ -196,9 +182,9 @@ export default {
       // 加载数据方法 必须为 Promise 对象
       loadData: parameter => {
         const requestParameters = Object.assign({}, parameter, this.queryParam)
-        console.log('loadData request parameters:', requestParameters)
-        return getServiceList(requestParameters)
+        return getArticleList(requestParameters)
           .then(res => {
+            console.log(res)
             return res.result
           })
       },
@@ -212,6 +198,9 @@ export default {
     },
     statusTypeFilter (type) {
       return statusMap[type].status
+    },
+    times (value) {
+      return value
     }
   },
   created () {

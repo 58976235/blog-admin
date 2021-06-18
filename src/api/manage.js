@@ -3,6 +3,7 @@ import request from '@/utils/request'
 const api = {
   user: '/user',
   role: '/role',
+  article: '/getArticle',
   service: '/service',
   permission: '/permission',
   permissionNoPager: '/permission/no-pager',
@@ -27,9 +28,9 @@ export function getRoleList (parameter) {
   })
 }
 
-export function getServiceList (parameter) {
+export function getArticleList (parameter) {
   return request({
-    url: api.service,
+    url: api.article,
     method: 'get',
     params: parameter
   })

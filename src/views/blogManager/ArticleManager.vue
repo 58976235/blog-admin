@@ -11,7 +11,7 @@
             </a-col>
             <a-col :md="8" :sm="24">
               <a-form-item label="文章状态">
-                <a-select v-model="queryParam.status" placeholder="请选择" default-value="0">
+                <a-select v-model="queryParam.status" placeholder="请选择" default-value="2">
                   <a-select-option value="2">全部</a-select-option>
                   <a-select-option value="0">隐藏</a-select-option>
                   <a-select-option value="1">显示</a-select-option>
@@ -79,11 +79,14 @@
         <span slot="time" slot-scope="time">
           {{ time | times }}
         </span>
+        <span slot="type" slot-scope="type">
+          {{ type | types }}
+        </span>
         <span slot="action" slot-scope="text, record">
           <template>
-            <a @click="handleEdit(record)">配置</a>
+            <a @click="handleEdit(record)">编辑</a>
             <a-divider type="vertical" />
-            <a @click="handleSub(record)">订阅报警</a>
+            <a @click="handleSub(record)">删除</a>
           </template>
         </span>
       </s-table>
@@ -131,7 +134,8 @@ const columns = [
   },
   {
     title: '文章状态',
-    dataIndex: 'type'
+    dataIndex: 'type',
+    scopedSlots: { customRender: 'type' }
   },
   {
     title: '操作',
@@ -184,8 +188,7 @@ export default {
         const requestParameters = Object.assign({}, parameter, this.queryParam)
         return getArticleList(requestParameters)
           .then(res => {
-            console.log(res)
-            return res.result
+            return res.data.msg
           })
       },
       selectedRowKeys: [],
@@ -200,7 +203,17 @@ export default {
       return statusMap[type].status
     },
     times (value) {
-      return value
+      const date = new Date(value)
+      const y = date.getFullYear()
+      const m = date.getMonth() + 1
+      const d = date.getDay()
+      const h = date.getHours()
+      const mm = date.getMinutes()
+      const s = date.getSeconds()
+      return y + '-' + m + '-' + d + ' ' + h + ':' + mm + ':' + s
+    },
+    types (value) {
+      return Number(value) ? '隐藏' : '显示'
     }
   },
   created () {

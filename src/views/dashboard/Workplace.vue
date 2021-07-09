@@ -9,7 +9,7 @@
           <div class="content-title">
             {{ timeFix }}，{{ user.name }}<span class="welcome-text">，{{ welcome }}</span>
           </div>
-          <div>{{user.info}}</div>
+          <div>{{ user.info }}</div>
         </div>
       </div>
     </template>
